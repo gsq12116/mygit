@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}
+    主页
+{% endblock %}
+{% block css %}
+<link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="/static/js/script.js"></script>
+{% endblock %}
+{% block content %}
+<h1>主页</h1>
+<div class="navbg">
+		<div class="col960">
+			<ul id="navul" class="cl">
+				<li class="navhome"><a href="#">HOME</a></li>
+				<li>
+					<a href="#">Html</a>
+					<ul>
+						<li><a href="#">HTML</a></li>
+						<li><a href="#">HTML5</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">CSS</a>
+					<ul>
+						<li><a href="#">CSS入门</a></li>
+						<li><a href="#">CSS工具</a></li>
+						<li><a href="#">CSS技巧</a></li>
+						<li><a href="#">CSS实例</a></li>
+						<li><a href="#">CSS3</a></li>
+						<li><a href="#">CSS hack</a></li>
+						<li><a href="#">CSS2.0 手册</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">网页特效</a>
+					<ul>
+						<li><a href="#">导航菜单</a></li>
+						<li><a href="#">表单按钮</a></li>
+						<li><a href="#">表格图层</a></li>
+						<li><a href="#">图片特效</a></li>
+						<li><a href="#">滚动特效</a></li>
+						<li><a href="#">文字特效</a></li>
+						<li><a href="#">时间日期</a></li>
+						<li><a href="#">窗口特效</a></li>
+						<li><a href="#">鼠标特效</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">前端资讯</a>
+					<ul>
+						<li><a href="#">用户体验</a></li>
+						<li><a href="#">前端观察</a></li>
+						<li><a href="#">职业生涯</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">前端技巧</a>
+					<ul>
+						<li><a href="#">布局技巧</a></li>
+						<li><a href="#">网页字体</a></li>
+						<li><a href="#">flash</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">杂七杂八</a>
+					<ul>
+						<li><a href="#">帝国cms</a></li>
+						<li><a href="#">电脑技巧</a></li>
+						<li><a href="#">随笔杂谈</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Javascript</a>
+					<ul>
+						<li><a href="#">Jquery</a></li>
+						<li><a href="#">Js学习</a></li>
+						<li><a href="#">Js教程</a></li>
+					</ul>
+				</li>
+                <li>
+					<a href="{% url 'home:logout' %}">注销</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<script  type="text/javascript">
+$(document).ready(function(){
+
+	$(".navbg").capacityFixed();
+
+	$("#navul > li").not(".navhome").hover(function(){
+		$(this).addClass("navmoon");
+	},function(){
+		$(this).removeClass("navmoon");
+	});
+
+});
+</script>
+{% endblock %}
