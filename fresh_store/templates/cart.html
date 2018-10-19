@@ -1,0 +1,108 @@
+{% extends 'base_main.html' %}
+{% block title %}
+天天生鲜-购物车
+{% endblock %}
+{% block content %}
+	<div class="total_count">全部商品<em>{{ len }}</em>件</div>
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+	{% for good in goods %}
+	<ul class="cart_list_td clearfix">
+		<li class="col01"><input type="checkbox" name="" id="good_{{ good.0 }}" class="buy" {% if good.2 %} checked {% endif %} onchange="f_one({{ good.0 }})"></li>
+		{% for good_info in goods_info %}
+			{% ifequal good.0 good_info.id %}
+				<li class="col02"><img src="/media/{{ good_info.goods_front_image }}"></li>
+				<li class="col03">{{ good_info.name }}<br><em>{{ good_info.shop_price }}元/500g</em></li>
+				<li class="col04">500g</li>
+				<li class="col05"><font id="price">{{ good_info.shop_price }}</font>元</li>
+			{% endifequal %}
+		{% endfor %}
+		<li class="col06">
+			<div class="num_add">
+				<a href="javascript:;" class="add fl">+</a>
+				<input type="text" class="num_show fl" value="{{ good.1 }}">
+				<a href="javascript:;" class="minus fl">-</a>
+			</div>
+		</li>
+		<li class="col07 s_total_{{ good.2 }}">{{ good.3 }}</li>
+		<li class="col08"><a href="javascript:;">删除</a></li>
+	</ul>
+	{% endfor %}
+
+	<ul class="settlements">
+		<li class="col01"><input type="checkbox" name="" id="all_use" onchange="f_all()"></li>
+		<li class="col02">全选</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em id="total">42.60</em><br>共计<b id="total_num">{{ select_len }}</b>件商品</li>
+		<li class="col04"><a href="{% url 'orders:order' %}">去结算</a></li>
+	</ul>
+	{% csrf_token %}
+</script>
+<script >
+	var t = document.getElementById('total')
+	var totals = document.getElementsByClassName('s_total_True')
+	var sum = 0
+	for(var i=0;i<totals.length;i++){
+		sum += parseInt(totals[i].innerHTML)
+	}
+	t.innerHTML = sum
+	function f_all(){
+		var check = $('#all_use').prop('checked')
+		var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+		$.ajax({
+			url: '/cart/cart_check_all/',
+			type:'POST',
+			data:{"all_use": check},
+			dataType:'json',
+			headers:{'X-CSRFToken': csrf},
+			success:function(data){
+				if(data.code == 200){
+					console.log(data.all)
+					console.log(data.sum_price)
+					$('.buy').prop('checked', data.all)
+					$('#total').html(data.sum_price)
+					$('#total_num').html(data.count)
+            	}
+			},
+			error: function(data){
+				alert('请求失败')
+			}
+
+		})
+	}
+	function f_one(id){
+		var check = $('#good_'+id).prop('checked')
+		var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+		$.ajax({
+			url: '/cart/cart_check_one/',
+			type:'POST',
+			data:{"one_use": check,"one_id": id},
+			dataType:'json',
+			headers:{'X-CSRFToken': csrf},
+			success:function(data){
+				if(data.code == 200){
+					console.log('ok')
+					console.log(data.sum_price)
+					$('#total').html(data.sum_price)
+					$('#total_num').html(data.count)
+            	}
+			},
+			error: function(data){
+				alert('请求失败')
+			}
+
+		})
+	}
+
+</script>
+{% endblock %}
+
+
+
+
+
